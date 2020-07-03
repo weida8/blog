@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import {
   Navbar,
   NavbarToggler,
@@ -11,18 +11,13 @@ import {
   DropdownToggle,
   DropdownMenu,
   DropdownItem,
-  InputGroup,
-  InputGroupAddon,
-  InputGroupText,
-  FormInput,
   Collapse
 } from "shards-react";
 
 export default function NavExample(props) {
-
+    const location = useLocation();
     const [dropdownOpen, setDropdownOpen] = useState(false)
     const [collapseOpen, setCollapseOpen] = useState(false)
-
 
     const toggleDropdown = () => {
         setDropdownOpen(!dropdownOpen)
@@ -34,35 +29,35 @@ export default function NavExample(props) {
 
     return (
         <>
-            <Navbar type="dark" theme="secondary" expand={false}>
-                <NavbarBrand tag={Link} to="/trails">Blog</NavbarBrand>
+            <Navbar type="dark" theme="secondary" expand={true}>
+                <NavbarBrand tag={Link} to="/trails">Trailblazer Blog</NavbarBrand>
                 <NavbarToggler onClick={toggleNavbar} />
 
                 <Collapse open={collapseOpen} navbar>
-                <Nav navbar fill={true}>
+                <Nav navbar className="ml-auto">
                     <NavItem>
-                    <NavLink active tag={Link} to="/trails">
-                        Travel Trails
-                    </NavLink>
+                        <NavLink active={location.pathname === '/trails'} tag={Link} to="/trails">
+                            Travel Trails
+                        </NavLink>
                     </NavItem>
                     <NavItem>
-                    <NavLink tag={Link} to="/my-trails">
-                        My Trails
-                    </NavLink>
+                        <NavLink active={location.pathname === '/my-trails'} tag={Link} to="/my-trails">
+                            My Trails
+                        </NavLink>
                     </NavItem>
                     <NavItem>
-                    <NavLink tag={Link} to="/trailblazing">
-                        Trailblazing!
-                    </NavLink>
+                        <NavLink active={location.pathname === '/trailblazing'} tag={Link} to="/trailblazing">
+                            Trailblazing!
+                        </NavLink>
                     </NavItem>
                     <Dropdown
-                    open={dropdownOpen}
-                    toggle={toggleDropdown}
+                        open={dropdownOpen}
+                        toggle={toggleDropdown}
                     >
                     <DropdownToggle nav caret>
                         {props.username}
                     </DropdownToggle>
-                    <DropdownMenu>
+                    <DropdownMenu right>
                         <DropdownItem>Profile</DropdownItem>
                         <DropdownItem>Settings</DropdownItem>
                     </DropdownMenu>

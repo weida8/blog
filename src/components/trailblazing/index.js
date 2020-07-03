@@ -1,16 +1,17 @@
-import React from 'react'
+import React, {useState} from 'react'
 import ContentLayout from '../ContentLayout'
 import { Form, Field } from 'react-final-form'
-import { FormInput, Row, Col } from "shards-react";
+import { FormInput, Row, Col, FormTextarea, Button } from "shards-react";
+import ReactMarkdown from 'react-markdown'
 import {TrailBlazingContainer} from './styles'
+import {required} from '../../utils/validations'
 
 export default function Trailblazing() {
+    const [summary, setSummary] = useState()
 
-    const onSubmit = values => {
-        console.log(values)
+    const onSubmit = (values) => {
+        setSummary(values.summary)
     }
-
-    const required = value => (value ? undefined : 'Required')
 
     return( <ContentLayout>
         <TrailBlazingContainer>
@@ -22,59 +23,54 @@ export default function Trailblazing() {
                 render={({ handleSubmit, form, submitting, pristine, values }) => (
                     <form onSubmit={handleSubmit}>
                     <Field name="title" validate={required}>
-                            {({ input }) => (
+                            {({ input, meta }) => (
                                 <Row className='row'>
                                     <Col>
-                                        <FormInput {...input} type="text" placeholder="Title" />
+                                        <FormInput 
+                                            {...input} 
+                                            invalid={meta.error && meta.touched} 
+                                            type="text" 
+                                            placeholder="Title" 
+                                            />
                                     </Col>
                                 </Row>
                             )}
                     </Field>
                     <Field name="location" validate={required}>
-                        {({ input }) => (
+                        {({ input, meta }) => (
                             <Row className='row'>
                                 <Col>
-                                    <FormInput {...input} type="text" placeholder="Location" />
+                                    <FormInput 
+                                    {...input} 
+                                    invalid={meta.error && meta.touched}
+                                    type="text" 
+                                    placeholder="Location" 
+                                    />
                                 </Col>
                             </Row>
                         )}
                     </Field>
-                    <Field name="lastName" validate={required}>
+                    <Field name="summary" validate={required}>
                         {({ input, meta }) => (
-                        <div>
-                            <label>Last Name</label>
-                            <input {...input} type="text" placeholder="Last Name" />
-                            {meta.error && meta.touched && <span>{meta.error}</span>}
-                        </div>
+                            <Row className='row'>
+                                <Col>
+                                    <FormTextarea 
+                                        id='summary'
+                                        invalid={meta.error && meta.touched}
+                                        {...input} 
+                                        placeholder="Summary"
+                                    />
+                                </Col>
+                            </Row>
                         )}
-                    </Field>
-                    <Field
-                        name="age"
-                    >
-                        {({ input, meta }) => (
-                        <div>
-                            <label>Age</label>
-                            <input {...input} type="text" placeholder="Age" />
-                            {meta.error && meta.touched && <span>{meta.error}</span>}
-                        </div>
-                        )}
-                    </Field>
-                    <div className="buttons">
-                        <button type="submit" disabled={submitting}>
-                        Submit
-                        </button>
-                        <button
-                        type="button"
-                        onClick={form.reset}
-                        disabled={submitting || pristine}
-                        >
-                        Reset
-                        </button>
-                    </div>
-                    <pre>{JSON.stringify(values, 0, 2)}</pre>
+                        </Field>
+                        <Button type="submit" className='submit-button'>
+                            SUBMIT
+                        </Button>
                     </form>
                 )}
                 />
+                <ReactMarkdown source={summary}/>
         </TrailBlazingContainer>
     </ContentLayout>)
 }

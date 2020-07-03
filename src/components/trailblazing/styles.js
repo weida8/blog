@@ -13,4 +13,11 @@ export const TrailBlazingContainer = styled.div`
     .row {
         padding: 1% 0;
     }
+    .submit-button {
+        background-color: #75533e;
+        border-color: #75533e;
+    }
+    #summary {
+        height: 30vh;
+    }
 `;
