@@ -1,25 +1,25 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { Route, Switch } from "react-router-dom";
+import PrivateRoute from './utils/PrivateRoute'
+import MyTrails from './components/myTrails'
+import Trails from './components/trails'
+import Trailblazing from './components/trailblazing'
+import {Login, Register} from './components/authentication'
+import Home from './components/home'
+import Layout from './Layout'
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Layout>
+      <Switch>
+        <PrivateRoute path="/trails" component={Trails} />
+        <PrivateRoute path="/my-trails" component={MyTrails}/>
+        <PrivateRoute path="/trailblazing" component={Trailblazing}/>
+        <Route path="/login" component={Login} />
+        <Route path="/register" component={Register}/>
+        <Route path="/" component={Home}/>
+      </Switch>
+    </Layout>
   );
 }
 
