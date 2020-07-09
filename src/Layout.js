@@ -1,4 +1,6 @@
 import React, {useState} from "react";
+import { ThemeProvider } from "styled-components";
+import theme from './theme'
 import { Link, useLocation } from "react-router-dom";
 import {
   Navbar,
@@ -28,9 +30,9 @@ export default function NavExample(props) {
     }
 
     return (
-        <>
-            <Navbar type="dark" theme="secondary" expand={true}>
-                <NavbarBrand tag={Link} to="/trails">Trailblazer Blog</NavbarBrand>
+        <ThemeProvider theme={theme}>
+            <Navbar type="dark" theme="secondary" expand="sm">
+                <NavbarBrand tag={Link} to="/">TRAILBLAZER BLOG</NavbarBrand>
                 <NavbarToggler onClick={toggleNavbar} />
 
                 <Collapse open={collapseOpen} navbar>
@@ -65,7 +67,9 @@ export default function NavExample(props) {
                 </Nav>
                 </Collapse>
             </Navbar>
-            {props.children}
-        </>
+            <div style={{marginTop: '5%'}}>
+                {props.children}
+            </div>
+        </ThemeProvider>
     );
 }

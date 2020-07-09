@@ -11,7 +11,7 @@ export default function ContentLayout(props) {
         <LayoutContainer>
             <Container style={{topMargin: '5%'}}>
                 <Row>
-                    <Col sm={{ size: 8, order: 2, offset: .5 }}>
+                    <Col sm={{ size: 11, order: 2, offset: .5 }}>
                         {props.children}
                     </Col>
                 </Row>
